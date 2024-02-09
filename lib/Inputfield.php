@@ -1,40 +1,55 @@
 <?php
 
-class Inputfield
+class Inputfield extends AbstractEingabekomponente
 {
 
-    private $rid;
-    private $storedValue;
-    private $itemId;
-    private $label;
+    protected $type = "text";
+    protected $settings = array();
 
-    function __construct($label, $rid, $itemId, $storedValue)
+    function __construct($label,  $itemId, $sliceId, $redaxoValue)
     {
-        $this->rid = $rid;
-        $this->itemId = $itemId;
-        $this->storedValue = $storedValue;
-        $this->label = $label;
+        parent::__construct($label, $itemId, $sliceId, $redaxoValue);
     }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+        return $this;
+    }
+
 
     public function getHTML()
     {
-        $htmlOutput = '';
-        $rex_value_1 = '';
-        if (isset($this->storedValue) && $this->storedValue != null) {
-            foreach ($this->itemId as $value) {
-                if (isset($this->storedValue[$value]) || isset($rex_value_1[$value])) {
-                    if ($rex_value_1 == '') {
-                        $rex_value_1 = $this->storedValue[$value];
-                    } else {
-                        $rex_value_1 = $rex_value_1[$value];
-                    }
-                }
-            }
-        }
-        $htmlOutput .=
+        $rex_value_1 = $this->getValue();
+        $id = join("-", $this->itemId);
+        $output =
             '<label style="width: 100%;" for="c-' . join("-", $this->itemId) . '">' . $this->label . ':</label>' .
-            '<input type="text" data-rex-item-id="' . join(",", $this->itemId) . '" name="REX_INPUT_VALUE[' . $this->rid . '][' . join("][", $this->itemId) . ']" value="' . $rex_value_1 . '" id="c-' . join("-", $this->itemId) . '" />';
+            '<input ' .
+            implode(' ', array_map(function ($k, $v) {
+                return "$k=\"" . urlencode($v) . "\"";
+            }, array_keys($this->settings), $this->settings))
+            . ' type="' . $this->type . '" data-rex-item-id="' . join(",", $this->itemId)
+            . '" name="REX_INPUT_VALUE[' .  $this->redaxoValueId . '][' . join("][", $this->itemId)
+            . ']" value="' . $rex_value_1
+            . '" id="c-' . $id . '" />';
 
-        return $htmlOutput;
+        if (in_array($this->type, array('range', 'color'))) {
+            $output .= '<br><label>Value: <input style="border: none; border-radius: 3px;" id="rangeValueOutput' . $id . '" value="' . $rex_value_1 . '"/></label>
+                        <script>
+                            var rangeValueOutput = document.querySelector("#rangeValueOutput' . $id . '");
+                            var rangeInput = document.querySelector("#c-' . $id . '");
+                            rangeValueOutput.textContent = rangeInput.value;
+                            rangeInput.addEventListener("input", (event) => {
+                                rangeValueOutput.value = event.target.value;
+                            });
+                        </script>';
+        }
+        return $output;
     }
 }
