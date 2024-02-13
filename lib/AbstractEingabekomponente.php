@@ -1,4 +1,7 @@
 <?php
+
+namespace redaxo_eingabekomponenten;
+
 class AbstractEingabekomponente
 {
 

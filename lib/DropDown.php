@@ -1,4 +1,6 @@
 <?php
+
+namespace redaxo_eingabekomponenten;
 class DropDown extends AbstractEingabekomponente
 {
     private $options;

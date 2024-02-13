@@ -1,4 +1,6 @@
 <?php
+
+namespace redaxo_eingabekomponenten;
 class Checkbox extends AbstractEingabekomponente
 {
     private $checkbox_value;

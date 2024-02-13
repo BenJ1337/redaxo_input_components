@@ -1,5 +1,7 @@
 <?php
 
+namespace redaxo_eingabekomponenten;
+
 class Inputfield extends AbstractEingabekomponente
 {
 
