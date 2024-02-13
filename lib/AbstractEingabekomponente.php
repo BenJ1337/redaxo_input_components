@@ -2,6 +2,8 @@
 
 namespace redaxo_eingabekomponenten;
 
+use rex_article_slice, rex_var;
+
 class AbstractEingabekomponente
 {
 
