@@ -1,6 +1,9 @@
 <?php
 
 namespace redaxo_eingabekomponenten;
+
+use rex_article_slice;
+
 class DropDown extends AbstractEingabekomponente
 {
     private $options;
@@ -23,7 +26,8 @@ class DropDown extends AbstractEingabekomponente
         $htmlOutput = '';
         if ($this->defaultValue != null) {
             $rex_value_1 = $this->defaultValue;
-        } else if (null !== $this->getValue()) {
+        }
+        if (null !== $this->getValue()) {
             $rex_value_1 = $this->getValue();
         }
         $htmlOutput .= '<label for="c-' . join("-", $this->itemId) . '">'

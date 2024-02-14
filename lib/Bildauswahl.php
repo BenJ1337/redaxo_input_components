@@ -2,6 +2,8 @@
 
 namespace redaxo_eingabekomponenten;
 
+use rex_var_media;
+
 class Bildauswahl extends AbstractEingabekomponente
 {
 
