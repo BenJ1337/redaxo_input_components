@@ -42,13 +42,13 @@ class Inputfield extends AbstractEingabekomponente
             . '" id="c-' . $id . '" />';
 
         if (in_array($this->type, array('range', 'color'))) {
-            $output .= '<br><label>Value: <input style="border: none; border-radius: 3px;" id="rangeValueOutput' . $id . '" value="' . $rex_value_1 . '"/></label>
+            $output .= '<br><label>Wert: <input style="border: none; border-radius: 3px;" id="rangeValueOutput' . $id . '" value="' . $rex_value_1 . '"/></label>
                         <script>
-                            var rangeValueOutput = document.querySelector("#rangeValueOutput' . $id . '");
+                            var rangeValueOutput' . $id . ' = document.querySelector("#rangeValueOutput' . $id . '");
                             var rangeInput = document.querySelector("#c-' . $id . '");
-                            rangeValueOutput.textContent = rangeInput.value;
+                            rangeValueOutput' . $id . '.textContent = rangeInput.value;
                             rangeInput.addEventListener("input", (event) => {
-                                rangeValueOutput.value = event.target.value;
+                                rangeValueOutput' . $id . '.value = event.target.value;
                             });
                         </script>';
         }
