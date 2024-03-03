@@ -7,6 +7,7 @@ class Inputfield extends AbstractEingabekomponente
 
     protected $type = "text";
     protected $settings = array();
+    protected $styles = array('width' => '100%');
 
     function __construct($label,  $itemId, $sliceId, $redaxoValue)
     {
@@ -25,13 +26,36 @@ class Inputfield extends AbstractEingabekomponente
         return $this;
     }
 
+    public function setStyles($styles)
+    {
+        $this->styles = $styles;
+        return $this;
+    }
+
+    public function addStyles($styles2add)
+    {
+        $curr = $this->styles;
+        foreach ($styles2add as $k => $v) {
+            $curr[$k] = $v;
+        }
+        $this->styles = $curr;
+        return $this;
+    }
+
+    public function getStyles()
+    {
+        return $this->styles;
+    }
+
 
     public function getHTML()
     {
         $rex_value_1 = $this->getValue();
         $id = join("-", $this->itemId);
-        $output =
-            '<label style="width: 100%;" for="c-' . join("-", $this->itemId) . '">' . $this->label . ':</label>' .
+        $output = '<div style="' . implode(' ', array_map(function ($k, $v) {
+            return "$k: " . $v . ";";
+        }, array_keys($this->styles), $this->styles)) . '">';
+        $output .= '<label stlye="width: 100%" for="c-' . join("-", $this->itemId) . '">' . $this->label . ':</label>' .
             '<input ' .
             implode(' ', array_map(function ($k, $v) {
                 return "$k=\"" . urlencode($v) . "\"";
@@ -42,7 +66,8 @@ class Inputfield extends AbstractEingabekomponente
             . '" id="c-' . $id . '" />';
 
         if (in_array($this->type, array('range', 'color'))) {
-            $output .= '<br><label>Wert: <input style="border: none; border-radius: 3px;" id="rangeValueOutput' . $id . '" value="' . $rex_value_1 . '"/></label>
+            $output .= '<label style="margin-top: 10px;">Wert: 
+                        <input style="border: none; border-radius: 3px;" id="rangeValueOutput' . $id . '" value="' . $rex_value_1 . '"/></label>
                         <script>
                             var rangeValueOutput' . $id . ' = document.querySelector("#rangeValueOutput' . $id . '");
                             var rangeInput = document.querySelector("#c-' . $id . '");
@@ -50,8 +75,12 @@ class Inputfield extends AbstractEingabekomponente
                             rangeInput.addEventListener("input", (event) => {
                                 rangeValueOutput' . $id . '.value = event.target.value;
                             });
+                            rangeValueOutput' . $id . '.addEventListener("input", (event) => {
+                                rangeInput.value = event.target.value;
+                            });
                         </script>';
         }
+        $output .= '</div>';
         return $output;
     }
 }
