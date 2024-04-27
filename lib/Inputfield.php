@@ -4,6 +4,11 @@ namespace redaxo_eingabekomponenten;
 
 class Inputfield extends AbstractEingabekomponente
 {
+    const TYPE_COLOR = 'color';
+    const TYPE_DATE = 'date';
+    const TYPE_CHECKBOX = 'checkbox';
+    const TYPE_MONTH = 'month';
+    const TYPE_RANGE = 'range';
 
     protected $type = "text";
     protected $settings = array();
@@ -55,6 +60,7 @@ class Inputfield extends AbstractEingabekomponente
         $output = '<div style="' . implode(' ', array_map(function ($k, $v) {
             return "$k: " . $v . ";";
         }, array_keys($this->styles), $this->styles)) . '">';
+
         $output .= '<label stlye="width: 100%" for="c-' . join("-", $this->itemId) . '">' . $this->label . ':</label>' .
             '<input ' .
             implode(' ', array_map(function ($k, $v) {
@@ -65,9 +71,9 @@ class Inputfield extends AbstractEingabekomponente
             . ']" value="' . $rex_value_1
             . '" id="c-' . $id . '" />';
 
-        if (in_array($this->type, array('range', 'color'))) {
-            $output .= '<label style="margin-top: 10px;">Wert: 
-                        <input style="border: none; border-radius: 3px;" id="rangeValueOutput' . $id . '" value="' . $rex_value_1 . '"/></label>
+        if (in_array($this->type, array(self::TYPE_RANGE, self::TYPE_COLOR))) {
+            $output .= '<label style="margin: 5px 0 15px 0;">Wert: 
+                        <input style="border: none; border-radius: 3px; margin-bottom: 10px" id="rangeValueOutput' . $id . '" value="' . $rex_value_1 . '"/></label>
                         <script>
                             var rangeValueOutput' . $id . ' = document.querySelector("#rangeValueOutput' . $id . '");
                             var rangeInput = document.querySelector("#c-' . $id . '");
