@@ -7,7 +7,6 @@ use rex_article_slice;
 class DropDown extends AbstractEingabekomponente
 {
     private $options;
-    private $defaultValue;
 
     function __construct($label,  $itemId, $sliceId, $redaxoValueId, $options)
     {
@@ -15,21 +14,12 @@ class DropDown extends AbstractEingabekomponente
         $this->options = $options;
     }
 
-    public function setDefaultValue($defaultValue)
-    {
-        $this->defaultValue = $defaultValue;
-        return $this;
-    }
-
     public function getHTML()
     {
         $htmlOutput = '';
-        if ($this->defaultValue != null) {
-            $rex_value_1 = $this->defaultValue;
-        }
-        if (null !== $this->getValue()) {
-            $rex_value_1 = $this->getValue();
-        }
+
+        $rex_value_1 = $this->getValue();
+        
         $htmlOutput .= '<label for="c-' . join("-", $this->itemId) . '">'
             . $this->label . ':</label>
                 <select class="rex-custom-input form-control" 

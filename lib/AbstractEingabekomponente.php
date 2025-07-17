@@ -11,6 +11,7 @@ class AbstractEingabekomponente
     protected $itemId;
     protected $label;
     protected $redaxoValueId;
+    protected $defaultValue = null;
 
     function __construct($label,  $itemId, $sliceId, $redaxoValueId)
     {
@@ -20,10 +21,16 @@ class AbstractEingabekomponente
         $this->redaxoValueId = $redaxoValueId;
     }
 
+    public function setDefaultValue($defaultValue)
+    {
+        $this->defaultValue = $defaultValue;
+        return $this;
+    }
+
     protected function getValue()
     {
         if (null == rex_article_slice::getArticleSliceById($this->sliceId)) {
-            return null;
+            return $this->defaultValue;
         }
         $storedValues = rex_var::toArray(rex_article_slice::getArticleSliceById($this->sliceId)->getValue($this->redaxoValueId));
         $rex_value_1 = '';
