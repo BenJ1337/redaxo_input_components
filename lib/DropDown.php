@@ -1,6 +1,6 @@
 <?php
 
-namespace redaxo_eingabekomponenten;
+namespace redaxo_custom_components;
 
 use rex_article_slice;
 
