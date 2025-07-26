@@ -5,11 +5,15 @@ namespace redaxo_custom_components;
 class WYSIWYGEditor extends AbstractEingabekomponente
 {
 
+    /** @inheritDoc */
     function __construct($label,  $itemId, $sliceId, $redaxoValue)
     {
         parent::__construct($label, $itemId, $sliceId, $redaxoValue);
     }
 
+    /**
+     * @return string WYSIWYG Markup
+     */
     private function getMarkup()
     {
         $rex_value_1 = $this->getValue();
@@ -19,6 +23,7 @@ class WYSIWYGEditor extends AbstractEingabekomponente
         return str_replace(array("\r", "\n"), '', str_replace("\"", "'", $rex_value_1));
     }
 
+    /** @inheritDoc */
     public function getHTML()
     {
         return '<div class="form-group">' .

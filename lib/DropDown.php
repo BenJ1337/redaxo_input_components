@@ -2,24 +2,27 @@
 
 namespace redaxo_custom_components;
 
-use rex_article_slice;
-
 class DropDown extends AbstractEingabekomponente
 {
     private $options;
 
+    /** 
+     * @inheritDoc 
+     * @param $options options of the drop down selection
+     */
     function __construct($label,  $itemId, $sliceId, $redaxoValueId, $options)
     {
         parent::__construct($label, $itemId, $sliceId, $redaxoValueId);
         $this->options = $options;
     }
 
+    /** @inheritDoc */
     public function getHTML()
     {
         $htmlOutput = '';
 
         $rex_value_1 = $this->getValue();
-        
+
         $htmlOutput .= '<label for="c-' . join("-", $this->itemId) . '">'
             . $this->label . ':</label>
                 <select class="rex-custom-input form-control" 

@@ -2,14 +2,16 @@
 
 namespace redaxo_custom_components;
 
-class Linkauswahl extends AbstractEingabekomponente
+class Linklistauswahl extends AbstractEingabekomponente
 {
 
+    /** @inheritDoc */
     function __construct($label,  $itemId, $sliceId, $redaxoValue)
     {
         parent::__construct($label, $itemId, $sliceId, $redaxoValue);
     }
 
+    /** @inheritDoc */
     public function getHTML()
     {
         return '<label>' . $this->label . '<br>' . rex_var_linklist::getWidget(

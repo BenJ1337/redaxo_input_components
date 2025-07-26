@@ -8,6 +8,7 @@ class Inputfield extends AbstractEingabekomponente
     protected $type = "text";
     protected $settings = array();
 
+    /** @inheritDoc */
     function __construct($label,  $itemId, $sliceId, $redaxoValue)
     {
         parent::__construct($label, $itemId, $sliceId, $redaxoValue);
@@ -25,7 +26,7 @@ class Inputfield extends AbstractEingabekomponente
         return $this;
     }
 
-
+    /** @inheritDoc */
     public function getHTML()
     {
         $rex_value_1 = $this->getValue();

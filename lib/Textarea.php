@@ -5,11 +5,13 @@ namespace redaxo_custom_components;
 class Textarea extends  AbstractEingabekomponente
 {
 
+    /** @inheritDoc */
     function __construct($label,  $itemId, $sliceId, $redaxoValue)
     {
         parent::__construct($label, $itemId, $sliceId, $redaxoValue);
     }
 
+    /** @inheritDoc */
     public function getHTML()
     {
         $rex_value_1 = $this->getValue();

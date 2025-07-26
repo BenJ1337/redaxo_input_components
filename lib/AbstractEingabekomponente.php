@@ -4,16 +4,26 @@ namespace redaxo_custom_components;
 
 use rex_article_slice, rex_var;
 
-class AbstractEingabekomponente
+abstract class AbstractEingabekomponente
 {
-
+    /** @var int */
     protected $sliceId;
+    /** string[] */
     protected $itemId;
+    /** @var string Label */
     protected $label;
+    /** @var int */
     protected $redaxoValueId;
+    /** @var string */
     protected $defaultValue = null;
 
-    function __construct($label,  $itemId, $sliceId, $redaxoValueId)
+    /**
+     * @param string $label  Text for this input component
+     * @param string[] $itemId property path for this value
+     * @param int $sliceId Id of the slice in which this input component is integrated
+     * @param int $redaxoValueId Id of the input component group
+     */
+    function __construct($label, $itemId, $sliceId, $redaxoValueId)
     {
         $this->label = $label;
         $this->itemId = $itemId;
@@ -21,12 +31,24 @@ class AbstractEingabekomponente
         $this->redaxoValueId = $redaxoValueId;
     }
 
+    /**
+     * @return string markup for this input component
+     */
+    abstract public function getHTML();
+
+    /**
+     * Sets the default value for this input component
+     * @param string default value
+     */
     public function setDefaultValue($defaultValue)
     {
         $this->defaultValue = $defaultValue;
         return $this;
     }
 
+    /**
+     * @return string current Value set by the user
+     */
     protected function getValue()
     {
         if (null == rex_article_slice::getArticleSliceById($this->sliceId)) {
